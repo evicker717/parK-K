@@ -9,7 +9,11 @@ const routes: Routes = [
   {
     path: 'tabs/tab1/submit-page',
     loadChildren: () => import('./submit-page/submit-page.module').then( m => m.SubmitPagePageModule)
+  },  {
+    path: 'tab2',
+    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
   }
+
 
 ];
 @NgModule({
