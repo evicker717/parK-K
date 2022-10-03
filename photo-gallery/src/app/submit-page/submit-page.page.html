@@ -9,5 +9,18 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-range [pin]="true" [pinFormatter]="pinFormatter"></ion-range>
+  <ion-text color="tertiary">
+    <h3>The Selected Lot is currently ___% full</h3>
+  </ion-text>
+<form>
+  <ion-label>      
+      Help us provide the most accurate data possible, how full is the lot currently?
+  </ion-label>
+  <ion-range [pin]="true" [pinFormatter]="pinFormatter">
+  </ion-range>
+  <ion-button (click)="presentAlert()">Submit</ion-button>
+  <p>{{ handlerMessage }}</p>
+  <p>{{ roleMessage }}</p>
+
+</form>
 </ion-content>
