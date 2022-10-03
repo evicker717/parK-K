@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Avalible Lots
+      Available Lots
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,11 +13,8 @@
     </ion-toolbar>
   </ion-header>
   <ion-list [inset]="true">
-    <ion-item button detail="true">
-      <ion-label>
-        <h2>Hicks Visitor Lot</h2>
-        <p>Can put most recent submission or an average percentage here</p>
-      </ion-label>
+    <ion-item button [routerLink]="['submit-page']">
+      <ion-label>Hicks Visitor Lot</ion-label>
     </ion-item>
     <ion-item button detail="true">
       <ion-label>FAB/Dow Parking Lot</ion-label>
