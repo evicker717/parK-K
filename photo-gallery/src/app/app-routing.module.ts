@@ -5,8 +5,9 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  },  {
-    path: 'submit-page',
+  },
+  {
+    path: 'tabs/tab1/submit-page',
     loadChildren: () => import('./submit-page/submit-page.module').then( m => m.SubmitPagePageModule)
   }
 
