@@ -3,6 +3,22 @@
 
 /** Ionic CSS Variables **/
 :root {
+  /** purple **/
+  --ion-color-purple: #870058;
+	--ion-color-purple-rgb: 135,0,88;
+	--ion-color-purple-contrast: #ffffff;
+	--ion-color-purple-contrast-rgb: 255,255,255;
+	--ion-color-purple-shade: #77004d;
+	--ion-color-purple-tint: #931a69;
+
+  /** green **/
+  --ion-color-green: #169873;
+	--ion-color-green-rgb: 22,152,115;
+	--ion-color-green-contrast: #ffffff;
+	--ion-color-green-contrast-rgb: 255,255,255;
+	--ion-color-green-shade: #138665;
+	--ion-color-green-tint: #2da281;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -83,6 +99,20 @@
    */
 
   body {
+    --ion-color-purple: #870058;
+	  --ion-color-purple-rgb: 135,0,88;
+	  --ion-color-purple-contrast: #ffffff;
+	  --ion-color-purple-contrast-rgb: 255,255,255;
+	  --ion-color-purple-shade: #77004d;
+	  --ion-color-purple-tint: #931a69;
+
+    --ion-color-green: #169873;
+	  --ion-color-green-rgb: 22,152,115;
+	  --ion-color-green-contrast: #ffffff;
+	  --ion-color-green-contrast-rgb: 255,255,255;
+	  --ion-color-green-shade: #138665;
+	  --ion-color-green-tint: #2da281;
+    
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
