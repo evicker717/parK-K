@@ -7,14 +7,9 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'tabs/tab1/submit-page',
+    path: 'tabs/tab1/submit-page/:mylot',
     loadChildren: () => import('./submit-page/submit-page.module').then( m => m.SubmitPagePageModule)
-  },  {
-    path: 'tab2',
-    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
   }
-
-
 ];
 @NgModule({
   imports: [

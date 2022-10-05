@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-submit-page',
   templateUrl: './submit-page.page.html',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class SubmitPagePage implements OnInit {
   handlerMessage = '';
   roleMessage = '';
-  constructor(private alertController: AlertController, private router:Router){}
+  constructor(private alertController: AlertController,private activatedRoute: ActivatedRoute, private router: Router){}
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Thank you for helping us provide accurate data!',
@@ -29,7 +30,10 @@ export class SubmitPagePage implements OnInit {
     const { role } = await alert.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
   }
+  myLot: string;
+
   ngOnInit() {
-  }
+    this.myLot = this.activatedRoute.snapshot.paramMap.get('mylot');
+    }
 
 }
