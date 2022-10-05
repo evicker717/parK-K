@@ -24,8 +24,12 @@
           <ion-label>      
               Help us provide the most accurate data possible, how full is the lot currently?
           </ion-label>
-          <ion-range [pin]="true" [pinFormatter]="pinFormatter">
-          </ion-range>
+          <ion-row>
+            <ion-col>
+              <ion-range [pin]="true" [pinFormatter]="pinFormatter">
+              </ion-range>
+            </ion-col>
+          </ion-row>
           <ion-button type="submit" (click)="presentAlert()">Submit</ion-button>
           <p>{{ handlerMessage }}</p>
         </form>
