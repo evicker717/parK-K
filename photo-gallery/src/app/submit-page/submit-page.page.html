@@ -9,32 +9,35 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-text color='primary'>
-          {{myLot}}: {{myLot.average}}% full
-        </ion-text> 
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <form>
-          <ion-label class="ion-text-wrap">      
-              Help us provide the most accurate data possible, how full is the lot currently?
-          </ion-label>
-          <ion-row>
-            <ion-col>
-              <ion-range [pin]="true" [pinFormatter]="pinFormatter">
-              </ion-range>
-            </ion-col>
-          </ion-row>
-          <ion-button type="submit" (click)="presentAlert()">Submit</ion-button>
-          <p>{{ handlerMessage }}</p>
-        </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text color='muteblue'>
+            {{myLot}}: {{myLot.average}}% full
+          </ion-text> 
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <form>
+            <ion-label class="ion-text-wrap">      
+                Help us provide the most accurate data possible, how full is the lot currently?
+            </ion-label>
+            <ion-row>
+              <ion-col>
+                <ion-range [pin]="true" [pinFormatter]="pinFormatter" color='muteblue'>
+                </ion-range>
+              </ion-col>
+            </ion-row>
+            <ion-button color='muteblue' type="submit" (click)="presentAlert()">Submit</ion-button>
+            <p>{{ handlerMessage }}</p>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
  
 </ion-content>
