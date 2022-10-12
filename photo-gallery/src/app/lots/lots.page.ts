@@ -29,15 +29,24 @@ export class LotsPage implements OnInit{
   message = 'This modal example uses the modalController to present and dismiss modals.';
   myLot: string;
   dateTime = new Date().toDateString();
-
-
+  ave: number;
   constructor(private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
 async getData(){
+  var total = 0;
   var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.dateTime) ));
   querySnapshot.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   console.log(doc.id, " => ", doc.data());
+  var obj = doc.data()
+  var fill = obj['fill']
+  console.log(typeof fill)
+  console.log(typeof total)
+  total = fill + total
 })
+console.log(querySnapshot.size)
+this.ave = total/querySnapshot.size
+console.log(this.ave)
+return this.ave   
 }
 
   async openModal() {
