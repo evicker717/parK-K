@@ -27,14 +27,17 @@
             </ion-label>
             <ion-row>
               <ion-col>
-                <ion-range [pin]="true" [pinFormatter]="pinFormatter" color='muteblue'>
+                <ion-range (ionChange)="onIonChange($event)" [pin]="true" [pinFormatter]="pinFormatter" color='muteblue'>
                 </ion-range>
+                <ion-label>ionChange emitted value: {{ lastEmittedValue }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-button color='muteblue' type="submit" (click)="presentAlert()">Submit</ion-button>
             <p>{{ handlerMessage }}</p>
           </form>
         </ion-col>
+        <ion-button color='muteblue' type="submit" (click)="getDocData()">Submit</ion-button>
+
       </ion-row>
     </ion-grid>
   </ion-card>
