@@ -3,10 +3,12 @@ import { AlertController } from '@ionic/angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore"; 
+import { addDoc, getFirestore } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore"; 
 import { RangeCustomEvent } from '@ionic/angular';
 import { RangeValue } from '@ionic/core';
+
+import { ModalController, NavParams } from '@ionic/angular';
 // Get a document, forcing the SDK to fetch from the offline cache.
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -25,6 +27,8 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const lotRef = (db);
+
 @Component({
   selector: 'app-submit-page',
   templateUrl: './submit-page.page.html',
@@ -34,21 +38,28 @@ const db = getFirestore(app);
 export class SubmitPagePage implements OnInit {
   handlerMessage = '';
   roleMessage = '';
-  lastEmittedValue: RangeValue;
-  constructor(private alertController: AlertController,private activatedRoute: ActivatedRoute, private router: Router){}
+  dateTime = new Date().toDateString();
+  lastEmittedValue: RangeValue; 
+  myLot: string;
+
+  constructor(private navParams: NavParams, private modalCtrl: ModalController, private alertController: AlertController,private activatedRoute: ActivatedRoute, private router: Router){}
+  
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
 
   async writeData() { 
     try {
-      const docRef = await addDoc(collection(db, "lots"), {
-        name: "hicks",
-        fill: 90,
+      await addDoc(collection(lotRef, this.myLot), {
+        fill: this.lastEmittedValue,
+        date: this.dateTime
       });
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", lotRef, lotRef);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
-  async presentAlert() {
+  async confirm() {
     const alert = await this.alertController.create({
       header: 'Thank you for helping us provide accurate data!',
       buttons: [
@@ -56,8 +67,7 @@ export class SubmitPagePage implements OnInit {
           text: 'OK',
           role: 'confirm',
           handler: () => {
-            this.writeData()
-            this.router.navigate(['/tabs/tab1'])
+            this.writeData()  
           },
         },
       ],
@@ -66,14 +76,17 @@ export class SubmitPagePage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    this.roleMessage = `Dismissed with role: ${role}`;
+    this.roleMessage = `Dismissed with role: ${role}`
+    return this.modalCtrl.dismiss(null, 'confirm');
   }
-  myLot: string;
   onIonChange(ev: Event) {
     this.lastEmittedValue = (ev as RangeCustomEvent).detail.value;
   }
+
   ngOnInit() {
-    this.myLot = this.activatedRoute.snapshot.paramMap.get('mylot');
+    this.navParams.data.myLot
+    console.log(this.myLot, this.dateTime)
+
     }
 
 
