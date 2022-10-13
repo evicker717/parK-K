@@ -3,8 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
+
+//Declare firestore config constants
+
 const firebaseConfig = {
   apiKey: "AIzaSyB37r3KlFR3iax1Z-AowIt03Tw8q_5BGMk",
   authDomain: "kalamazoo-college-parking-lot.firebaseapp.com",
@@ -16,38 +19,45 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
-
-
-
+//declare component parts
 @Component({
   selector: 'app-lots',
   templateUrl: 'lots.page.html',
 })
 export class LotsPage implements OnInit{
-  message = 'This modal example uses the modalController to present and dismiss modals.';
   myLot: string;
   dateTime = new Date().toDateString();
   ave: number;
-  constructor(private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
-async getData(){
-  var total = 0;
-  var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.dateTime) ));
-  querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-  var obj = doc.data()
-  var fill = obj['fill']
-  console.log(typeof fill)
-  console.log(typeof total)
-  total = fill + total
-})
-console.log(querySnapshot.size)
-this.ave = total/querySnapshot.size
-console.log(this.ave)
-return this.ave   
-}
+  p_bar_value: number;
+  roleMessage = '';
+
+  constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
+
+  async getData(){
+    var total = 0;
+    var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.dateTime) ));
+    querySnapshot.forEach((doc) => 
+    {
+    // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      var obj = doc.data()
+      var fill = obj['fill']
+      console.log(typeof fill)
+      console.log(typeof total)
+      total = fill + total
+    })
+    if(querySnapshot.size == 0)
+    {
+      this.confirm()
+    }
+  
+    this.ave = total/querySnapshot.size
+    console.log(this.ave)
+    this.setPercentBar()
+    console.log(this.p_bar_value)
+    return this.ave
+
+  }
 
   async openModal() {
     const modal = await this.modalCtrl.create({
@@ -59,11 +69,35 @@ return this.ave
     modal.present();
 
   }
+  setPercentBar() {
+      this.p_bar_value = this.ave/100;
+  }
+  async confirm() {
+    const alert = await this.alertController.create({
+      header: "looks like we don't have any up to date information on this location, please help us fix this by telling us how full it is now",
+      buttons: [
+        {
+          text: "OK",
+          role: 'confirm',
+          handler: () => {
+            this.openModal()  
+          },
+        },
+
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+
+  }
+
   ngOnInit() {
     this.myLot = this.activatedRoute.snapshot.paramMap.get('mylot');
     console.log(this.myLot)
     console.log(this.dateTime)
     this.getData()
 
-}
+  }
 }
