@@ -29,12 +29,13 @@ export class LotsPage implements OnInit{
   dateTime = new Date().toDateString();
   ave: number;
   p_bar_value: number;
-  roleMessage = '';
-
+  roleMessage: '';
+  todays_entries: Array<String>;
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
 
   async getData(){
     var total = 0;
+    var anArray = []
     var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.dateTime) ));
     querySnapshot.forEach((doc) => 
     {
@@ -42,19 +43,20 @@ export class LotsPage implements OnInit{
       console.log(doc.id, " => ", doc.data());
       var obj = doc.data()
       var fill = obj['fill']
-      console.log(typeof fill)
-      console.log(typeof total)
+      anArray.push(obj)
+      this.todays_entries = anArray
       total = fill + total
     })
     if(querySnapshot.size == 0)
     {
       this.confirm()
     }
-  
     this.ave = total/querySnapshot.size
     console.log(this.ave)
     this.setPercentBar()
     console.log(this.p_bar_value)
+    console.log(this.todays_entries)
+
     return this.ave
 
   }
@@ -98,6 +100,7 @@ export class LotsPage implements OnInit{
     console.log(this.myLot)
     console.log(this.dateTime)
     this.getData()
+
 
   }
 }

@@ -17,6 +17,20 @@
         </ion-card-header>
         <ion-card-content>
       <ion-progress-bar [value] = 'p_bar_value'></ion-progress-bar>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+      <ion-card-content>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>View Detailed Report</ion-label>
+          </ion-item>
+            <div class ="ion-padding"slot="content" *ngFor="let entry of todays_entries">
+              {{entry.date}}:  {{entry.fill}}%
+            </div>          
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-card-content>
     <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Acuraccy</ion-button>
   </ion-card>
