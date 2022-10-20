@@ -22,16 +22,27 @@
       <ion-card>
       <ion-card-content>
       <ion-accordion-group>
-        <ion-accordion value="first">
+        <ion-accordion value="detail-report">
           <ion-item slot="header" color="light">
             <ion-label>View Detailed Report</ion-label>
           </ion-item>
-            <div class ="ion-padding"slot="content" *ngFor="let entry of todays_entries">
-              {{entry.date}}:  {{entry.fill}}%
+              <ul class ="ion-padding"slot="content" *ngFor="let entry of todays_entries">
+              <li>
+                {{entry.datetime}}: {{entry.fill}}%
+              </li>
+            </ul>
+        </ion-accordion>
+        <ion-accordion value="map">
+          <ion-item slot="header" color="light">
+            <ion-label>View on Map</ion-label>
+          </ion-item>
+            <div class ="ion-padding" slot="content">
+              <img src="../assets/map.png">
             </div>          
         </ion-accordion>
       </ion-accordion-group>
     </ion-card-content>
-    <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Accuracy</ion-button>
   </ion-card>
+    <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Accuracy</ion-button>
+  
 </ion-content>

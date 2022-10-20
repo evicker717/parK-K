@@ -24,22 +24,24 @@ const db = getFirestore(app);
   selector: 'app-lots',
   templateUrl: 'lots.page.html',
 })
+//declare class that runs ngOnInit on activation
 export class LotsPage implements OnInit{
+  //declares global variables 
   myLot: string;
-  dateTime = new Date().toDateString();
+  date= new Date().toDateString();
+  time = new Date().getHours();
   ave: number;
   p_bar_value: number;
-  roleMessage: '';
   todays_entries: Array<String>;
-  constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
 
+  constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
+  
   async getData(){
     var total = 0;
     var anArray = []
-    var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.dateTime) ));
+    var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.date)&& where("time", "==", this.time) ));
     querySnapshot.forEach((doc) => 
     {
-    // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
       var obj = doc.data()
       var fill = obj['fill']
@@ -49,19 +51,32 @@ export class LotsPage implements OnInit{
     })
     if(querySnapshot.size == 0)
     {
-      this.confirm()
+      var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.date)));
+      querySnapshot.forEach((doc) => 
+      {
+        console.log(doc.id, " => ", doc.data());
+        console.log("no time data, using date")
+        var obj = doc.data()
+        var fill = obj['fill']
+        anArray.push(obj)
+        this.todays_entries = anArray
+        total = fill + total
+      })
+    }
+    if(querySnapshot.size == 0)
+    {
+      console.log("no data")
+      this.noDataHandler()
     }
     this.ave = total/querySnapshot.size
     console.log(this.ave)
     this.setPercentBar()
     console.log(this.p_bar_value)
     console.log(this.todays_entries)
-
     return this.ave
-
   }
 
-  async openModal() {
+  async openModal() {//opens up the fillable submition form 
     const modal = await this.modalCtrl.create({
       component: SubmitPagePage,
       componentProps: {
@@ -69,12 +84,11 @@ export class LotsPage implements OnInit{
       }
     });
     modal.present();
-
   }
   setPercentBar() {
       this.p_bar_value = this.ave/100;
   }
-  async confirm() {
+  async noDataHandler() {//If there is no up-to-date data, displays a popup warning the user, than redirects them to the submision page on confirm
     const alert = await this.alertController.create({
       header: "looks like we don't have any up to date information on this location, please help us fix this by telling us how full it is now",
       buttons: [
@@ -88,19 +102,11 @@ export class LotsPage implements OnInit{
 
       ],
     });
-
     await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-
   }
 
-  ngOnInit() {
+  ngOnInit() {//these functions activate as soon as a lot is clicked on from the main page
     this.myLot = this.activatedRoute.snapshot.paramMap.get('mylot');
-    console.log(this.myLot)
-    console.log(this.dateTime)
     this.getData()
-
-
   }
 }

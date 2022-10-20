@@ -38,7 +38,9 @@ const lotRef = (db);
 export class SubmitPagePage implements OnInit {
   handlerMessage = '';
   roleMessage = '';
-  dateTime = new Date().toDateString();
+  date = new Date().toDateString();
+  time = new Date().getHours();
+  datetime = new Date().toString();
   lastEmittedValue: RangeValue; 
   myLot: string;
 
@@ -52,9 +54,11 @@ export class SubmitPagePage implements OnInit {
     try {
       await addDoc(collection(lotRef, this.myLot), {
         fill: this.lastEmittedValue,
-        date: this.dateTime
+        datetime: this.datetime,
+        date: this.date,
+        time: this.time
       });
-      console.log("Document written with ID: ", lotRef, lotRef);
+      console.log("Document written with ID: ", lotRef);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -85,7 +89,7 @@ export class SubmitPagePage implements OnInit {
 
   ngOnInit() {
     this.navParams.data.myLot
-    console.log(this.myLot, this.dateTime)
+    console.log(this.myLot, this.date)
 
     }
 
