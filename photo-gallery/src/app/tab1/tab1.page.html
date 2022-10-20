@@ -3,6 +3,22 @@
     <ion-title>
       All Parking
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-item>
+        <ion-select
+        [compareWith]="compareWith"
+        placeholder="Sort by Type"
+        (ionChange)="handleChange($event)"
+        [multiple]="true">
+          <ion-select-option value="Visitor">Visitor</ion-select-option>
+          <ion-select-option value="Employee">Employee</ion-select-option>
+          <ion-select-option value="Overnight">Overnight</ion-select-option>
+          <ion-select-option value="Student">Student</ion-select-option>
+          <ion-select-option value="Street">Street Parking</ion-select-option>
+          <ion-select-option value="Lot">Lot Parking</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
@@ -15,43 +31,49 @@
     <ion-item button [routerLink]="['lots/Hicks']" detail="true" id="hickslot">
       <ion-label>
         <h2>Hicks Visitor Lot</h2>
-        <p>%</p>
+        <p>Visitor, Employee, Student, No Overnight</p>
       </ion-label>
     </ion-item>
     <ion-item button [routerLink]="['lots/FAB & Dow']" detail="true" id="fablot">
       <ion-label>
         <h2>FAB/Dow Parking Lot</h2>
-        <p>%</p>
+        <p>Employee/Admission Permit</p>
       </ion-label>
     </ion-item>
     <ion-item button [routerLink]="['lots/Tennis Courts']" detail="true"id="tennislot">
       <ion-label>
         <h2>Tennis Parking Lot</h2>
-        <p>%</p>
+        <p>Employee, Student, Overnight Student</p>
       </ion-label>
     </ion-item>
     <ion-item button [routerLink]="['lots/Academy Street']" detail="true" id="academySt">
       <ion-label>
         <h2>Academy Street</h2>
-        <p>%</p>
+        <p>Visitor, Employee, Student, No Overnight, Street Parking</p>
       </ion-label>
     </ion-item>
     <ion-item [routerLink]="['lots/Anderson']" button detail="true" id="andersonlot">
       <ion-label>
         <h2>Anderson Parking Lot</h2>
-        <p>%</p>
+        <p>Employee Only</p>
       </ion-label>
     </ion-item>
     <ion-item button [routerLink]="['lots/Trowbridge']" detail="true">
       <ion-label>
         <h2>Trowbridge Parking Lot</h2>
-        <p>%</p>
+        <p>Employee, Student, Overnight Student</p>
       </ion-label>
     </ion-item>
     <ion-item button [routerLink]="['lots/Severn']" detail="true">
       <ion-label>
         <h2>Severn Parking Lot</h2>
-        <p>%</p>
+        <p>Overnight Student</p>
+      </ion-label>
+    </ion-item>
+    <ion-item button [routerLink]="['lots/Fitness & Wellness Center']" detail="true">
+      <ion-label>
+        <h2>Fitness & Wellness Center</h2>
+        <p>Visitor, Employee, Student, No Overnight</p>
       </ion-label>
     </ion-item>
   </ion-list>
