@@ -51,23 +51,25 @@ export class LotsPage implements OnInit{
     })
     if(querySnapshot.size == 0)
     {
+      console.log("no time data, using date")
       var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.date)));
       querySnapshot.forEach((doc) => 
       {
         console.log(doc.id, " => ", doc.data());
-        console.log("no time data, using date")
         var obj = doc.data()
         var fill = obj['fill']
         anArray.push(obj)
         this.todays_entries = anArray
         total = fill + total
-      })
+        })
+        if(querySnapshot.size == 0)
+        {
+          console.log("no data")
+          this.noDataHandler()
+        }
+      
     }
-    if(querySnapshot.size == 0)
-    {
-      console.log("no data")
-      this.noDataHandler()
-    }
+
     this.ave = total/querySnapshot.size
     console.log(this.ave)
     this.setPercentBar()
