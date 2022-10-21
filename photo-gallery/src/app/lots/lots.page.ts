@@ -30,6 +30,7 @@ export class LotsPage implements OnInit{
   ave: number;
   p_bar_value: number;
   roleMessage = '';
+  // color = ;
 
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
 
@@ -71,10 +72,22 @@ export class LotsPage implements OnInit{
   }
   setPercentBar() {
       this.p_bar_value = this.ave/100;
+      if(this.p_bar_value > .75) {
+        // set color to red
+      }
+      else if(this.p_bar_value > .5) {
+        // set color to orange
+      }
+      else if(this.p_bar_value > .25) {
+        // set color to yellow
+      }
+      else {
+        // set color to green
+      }
   }
   async confirm() {
     const alert = await this.alertController.create({
-      header: "looks like we don't have any up to date information on this location, please help us fix this by telling us how full it is now",
+      header: "Looks like we don't have any up to date information on this location. Please help us fix this by telling us how full it is now",
       buttons: [
         {
           text: "OK",
