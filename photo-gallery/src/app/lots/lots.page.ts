@@ -5,6 +5,7 @@ import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
+import { DatePipe } from '@angular/common';
 
 //Declare firestore config constants
 
@@ -28,11 +29,11 @@ const db = getFirestore(app);
 export class LotsPage implements OnInit{
   //declares global variables 
   myLot: string;
-  date= new Date().toDateString();
+  date = new Date().toDateString();
   time = new Date().getHours();
   ave: number;
   p_bar_value: number;
-  color: string; // '#FFFFFF'
+  color: string;
   todays_entries: Array<String>;
 
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
@@ -40,7 +41,7 @@ export class LotsPage implements OnInit{
   async getData(){
     var total = 0;
     var anArray = []
-    var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.date)&& where("time", "==", this.time) ));
+    var querySnapshot = await getDocs(query(collection(db, this.myLot), where("date", "==", this.date) && where("time", "==", this.time) ));
     querySnapshot.forEach((doc) => 
     {
       console.log(doc.id, " => ", doc.data());
