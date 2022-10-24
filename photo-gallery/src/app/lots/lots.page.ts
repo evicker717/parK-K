@@ -32,6 +32,7 @@ export class LotsPage implements OnInit{
   time = new Date().getHours();
   ave: number;
   p_bar_value: number;
+  color: string; // '#FFFFFF'
   todays_entries: Array<String>;
 
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
@@ -90,16 +91,16 @@ export class LotsPage implements OnInit{
   setPercentBar() {
       this.p_bar_value = this.ave/100;
       if(this.p_bar_value > .75) {
-        // set color to red
+        this.color = "firebrick";
       }
       else if(this.p_bar_value > .5) {
-        // set color to orange
+        this.color = "warning";
       }
       else if(this.p_bar_value > .25) {
-        // set color to yellow
+        this.color = "yellow";
       }
       else {
-        // set color to green
+        this.color = "success";
       }
   }
   async noDataHandler() {//If there is no up-to-date data, displays a popup warning the user, than redirects them to the submision page on confirm
