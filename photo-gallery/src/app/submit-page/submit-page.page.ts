@@ -89,6 +89,7 @@ export class SubmitPagePage implements OnInit {
           role: 'confirm',
           handler: () => {
             this.writeData()  
+            this.getAvg()
           },
         },
       ],
@@ -106,7 +107,6 @@ export class SubmitPagePage implements OnInit {
 
   ngOnInit() {
     this.navParams.data.myLot
-    this.getAvg()
     }
 
 

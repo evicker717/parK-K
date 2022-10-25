@@ -18,3 +18,4 @@ exports.removeExpiredDocuments = functions.pubsub.schedule("every 1 hours").onRu
   return Promise.all(promises);
 });
 
+

@@ -8,12 +8,17 @@ import { AlertController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+    selectedTags = [];
+  handleChange(e) {
+    this.selectedTags = e.target.value;
+  }
 
       
 
 
   ngOnInit() 
   {
-    }
+
+  }
   
   }

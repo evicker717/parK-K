@@ -9,6 +9,8 @@
         [compareWith]="compareWith"
         placeholder="Sort by Type"
         (ionChange)="handleChange($event)"
+        (ionCancel)="pushLog('ionCancel fired')"
+        (ionDismiss)="pushLog('ionDismiss fired')"
         [multiple]="true">
           <ion-select-option value="Visitor">Visitor</ion-select-option>
           <ion-select-option value="Employee">Employee</ion-select-option>

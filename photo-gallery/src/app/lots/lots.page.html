@@ -12,15 +12,16 @@
 <ion-content>
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Capacity: {{avg}}%</ion-card-title>
+          <ion-card-title>Capacity: {{avg | number: '1.0-0'}}%</ion-card-title>
           <ion-card-subtitle>{{myLot}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
       <ion-progress-bar [color] = 'color' [value] = 'p_bar_value'></ion-progress-bar>
         </ion-card-content>
         <ion-card-content>
-        <ion-card-subtitle>{{cap}}</ion-card-subtitle>
-        <ion-card-subtitle>{{tags}}</ion-card-subtitle>
+        <ion-card-subtitle>Total Spots: {{cap}}</ion-card-subtitle>
+        <ion-card-subtitle>Tags: {{tags}}</ion-card-subtitle>
+        <ion-card-subtitle>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-subtitle>
       </ion-card-content>
       </ion-card>
       <ion-card>
@@ -32,7 +33,7 @@
           </ion-item>
               <ul class ="ion-padding" slot="content" *ngFor="let entry of todays_entries">
               <li>
-                {{entry.datetime}}: {{entry.fill}}%
+                {{entry.fill}}%, Submitted at {{entry.datetime | date: 'hh:mm a' }}
               </li>
             </ul>
         </ion-accordion>

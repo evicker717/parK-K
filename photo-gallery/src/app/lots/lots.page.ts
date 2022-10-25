@@ -37,6 +37,7 @@ export class LotsPage implements OnInit{
   lotData: Object
   cap: number
   tags: Array<string>
+  lastUpdated: string
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
   
   async getData(){
@@ -47,6 +48,7 @@ export class LotsPage implements OnInit{
       this.avg = docSnap.data().avg
       this.cap = docSnap.data().cap
       this.tags = docSnap.data().tags
+      this.lastUpdated = docSnap.data().lastUpdated
       this.setPercentBar()
     } else {
       // doc.data() will be undefined in this case
