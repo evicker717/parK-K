@@ -39,6 +39,7 @@ export class SubmitPagePage implements OnInit {
   handlerMessage = '';
   roleMessage = '';
   datetime = new Date().toString();
+  timeStamp = new Date().getTime();
   lastEmittedValue: RangeValue; 
   myLot: string;
   avg: number;
@@ -71,7 +72,8 @@ export class SubmitPagePage implements OnInit {
       await addDoc(collection(lotRef, "Submissions"), {
         fill: this.lastEmittedValue,
         datetime: this.datetime,
-        name: this.myLot
+        name: this.myLot,
+        timestamp: this.timeStamp
       });
       console.log("Document written with ID: ", lotRef);
     } catch (e) {
