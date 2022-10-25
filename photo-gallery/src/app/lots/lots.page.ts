@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { addDoc, getFirestore } from "firebase/firestore";
-import { collection, query, where, getDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDoc, doc, getDocs } from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
 import { DatePipe } from '@angular/common';
@@ -20,6 +20,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 //declare component parts
 @Component({
   selector: 'app-lots',
@@ -29,50 +30,41 @@ const db = getFirestore(app);
 export class LotsPage implements OnInit{
   //declares global variables 
   myLot: string;
-  date = new Date().toDateString();
-  time = new Date().getHours();
   avg: number;
   p_bar_value: number;
   color: string;
-  todays_entries: Array<String>;
+  todays_entries: Array<Object>;
   lotData: Object
+  cap: number
+  tags: Array<string>
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
   
   async getData(){
-    var total = 0;
-    var anArray = []
-    var querySnapshot = await getDoc(query(collection(db, this.myLot), where("date", "==", this.date) && where("time", "==", this.time) ));
-    querySnapshot.forEach((doc) => 
-    {
-      console.log(doc.id, " => ", doc.data());
-      var obj = doc.data()
-      var fill = obj['fill']
-      anArray.push(obj)
-      this.todays_entries = anArray
-      total = fill + total
-    })
-    if(querySnapshot.size == 0)
-    {
-      console.log("no time data, using date")
-      var querySnapshot = await getDoc(query(collection(db, this.myLot), where("date", "==", this.date)));
-      querySnapshot.forEach((doc) => 
-      {
-        console.log(doc.id, " => ", doc.data());
-        var obj = doc.data()
-        var fill = obj['fill']
-        anArray.push(obj)
-        this.todays_entries = anArray
-        total = fill + total
-        })
-        if(querySnapshot.size == 0)
-        {
-          console.log("no data")
-          this.noDataHandler()
-        }
-      
+    const docRef = doc(db, "Lots", this.myLot);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      this.avg = docSnap.data().avg
+      this.cap = docSnap.data().cap
+      this.tags = docSnap.data().tags
+      this.setPercentBar()
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+      this.noDataHandler()
     }
   }
-  
+  async getDetailedReport(){
+    const q = query(collection(db, "Submissions"), where("name", "==", this.myLot));
+    const querySnapshot = await getDocs(q);
+    var anArray = []
+
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      anArray.push(doc.data())
+});
+this.todays_entries = anArray 
+  }
 
   async openModal() {//opens up the fillable submition form 
     const modal = await this.modalCtrl.create({
@@ -84,7 +76,7 @@ export class LotsPage implements OnInit{
     modal.present();
   }
   setPercentBar() {
-      this.p_bar_value = this.ave/100;
+      this.p_bar_value = this.avg/100;
       if(this.p_bar_value > .75) {
         this.color = "firebrick";
       }
@@ -118,5 +110,6 @@ export class LotsPage implements OnInit{
   ngOnInit() {//these functions activate as soon as a lot is clicked on from the main page
     this.myLot = this.activatedRoute.snapshot.paramMap.get('mylot');
     this.getData()
+    this.getDetailedReport()
   }
 }

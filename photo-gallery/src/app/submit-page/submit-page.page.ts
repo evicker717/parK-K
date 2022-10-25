@@ -4,7 +4,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { addDoc, getFirestore } from "firebase/firestore";
-import { collection, doc } from "firebase/firestore"; 
+import { collection, query, where, getDocs, updateDoc, doc} from "firebase/firestore"; 
 import { RangeCustomEvent } from '@ionic/angular';
 import { RangeValue } from '@ionic/core';
 
@@ -41,12 +41,31 @@ export class SubmitPagePage implements OnInit {
   datetime = new Date().toString();
   lastEmittedValue: RangeValue; 
   myLot: string;
+  avg: number;
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private alertController: AlertController,private activatedRoute: ActivatedRoute, private router: Router){}
   
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
-
+  async getAvg(){
+    const q = query(collection(db, "Submissions"), where("name", "==", this.myLot));
+    var total = 0
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+    var temp = doc.data().fill
+    console.log(temp)
+    total = temp + total
+    console.log(total)
+});
+  this.avg = total/querySnapshot.size
+  console.log(this.avg) 
+  const lotRef = doc(db, "Lots", this.myLot)
+  await updateDoc(lotRef, {
+    avg: this.avg,
+    lastUpdated: this.datetime
+  });
+  }
   async writeData() { 
     try {
       await addDoc(collection(lotRef, "Submissions"), {
@@ -85,6 +104,7 @@ export class SubmitPagePage implements OnInit {
 
   ngOnInit() {
     this.navParams.data.myLot
+    this.getAvg()
     }
 
 
