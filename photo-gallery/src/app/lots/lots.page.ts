@@ -5,6 +5,7 @@ import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, query, where, getDoc, doc } from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
+import { DatePipe } from '@angular/common';
 
 //Declare firestore config constants
 
@@ -28,25 +29,49 @@ const db = getFirestore(app);
 export class LotsPage implements OnInit{
   //declares global variables 
   myLot: string;
-  date= new Date().toDateString();
+  date = new Date().toDateString();
   time = new Date().getHours();
   avg: number;
   p_bar_value: number;
+  color: string;
   todays_entries: Array<String>;
   lotData: Object
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
   
   async getData(){
-    const ref = doc(db, "Lots", this.myLot);
-    const docSnap = await getDoc(ref);
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      this.lotData = docSnap.data()
-      this.avg = this.lotData['avg']      
-      this.setPercentBar()
-    } else
-      console.log("No such document!");
+    var total = 0;
+    var anArray = []
+    var querySnapshot = await getDoc(query(collection(db, this.myLot), where("date", "==", this.date) && where("time", "==", this.time) ));
+    querySnapshot.forEach((doc) => 
+    {
+      console.log(doc.id, " => ", doc.data());
+      var obj = doc.data()
+      var fill = obj['fill']
+      anArray.push(obj)
+      this.todays_entries = anArray
+      total = fill + total
+    })
+    if(querySnapshot.size == 0)
+    {
+      console.log("no time data, using date")
+      var querySnapshot = await getDoc(query(collection(db, this.myLot), where("date", "==", this.date)));
+      querySnapshot.forEach((doc) => 
+      {
+        console.log(doc.id, " => ", doc.data());
+        var obj = doc.data()
+        var fill = obj['fill']
+        anArray.push(obj)
+        this.todays_entries = anArray
+        total = fill + total
+        })
+        if(querySnapshot.size == 0)
+        {
+          console.log("no data")
+          this.noDataHandler()
+        }
+      
     }
+  }
   
 
   async openModal() {//opens up the fillable submition form 
@@ -59,11 +84,23 @@ export class LotsPage implements OnInit{
     modal.present();
   }
   setPercentBar() {
-      this.p_bar_value = this.avg/100;
+      this.p_bar_value = this.ave/100;
+      if(this.p_bar_value > .75) {
+        this.color = "firebrick";
+      }
+      else if(this.p_bar_value > .5) {
+        this.color = "warning";
+      }
+      else if(this.p_bar_value > .25) {
+        this.color = "yellow";
+      }
+      else {
+        this.color = "success";
+      }
   }
   async noDataHandler() {//If there is no up-to-date data, displays a popup warning the user, than redirects them to the submision page on confirm
     const alert = await this.alertController.create({
-      header: "looks like we don't have any up to date information on this location, please help us fix this by telling us how full it is now",
+      header: "Looks like we don't have any up to date information on this location. Please help us fix this by telling us how full it is now",
       buttons: [
         {
           text: "OK",

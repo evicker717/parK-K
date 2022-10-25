@@ -19,6 +19,14 @@
 	--ion-color-firebrick-shade: #a5091d;
 	--ion-color-firebrick-tint: #c22337;
 
+  /** yellow **/
+  --ion-color-yellow: #ffff00;
+	--ion-color-yellow-rgb: 255,255,0;
+	--ion-color-yellow-contrast: #000000;
+	--ion-color-yellow-contrast-rgb: 0,0,0;
+	--ion-color-yellow-shade: #e0e000;
+	--ion-color-yellow-tint: #ffff1a;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -52,12 +60,12 @@
   --ion-color-success-tint: #42d77d;
 
   /** warning **/
-  --ion-color-warning: #ffc409;
-  --ion-color-warning-rgb: 255, 196, 9;
-  --ion-color-warning-contrast: #000000;
-  --ion-color-warning-contrast-rgb: 0, 0, 0;
-  --ion-color-warning-shade: #e0ac08;
-  --ion-color-warning-tint: #ffca22;
+  --ion-color-warning: #ffad09;
+	--ion-color-warning-rgb: 255,173,9;
+	--ion-color-warning-contrast: #000000;
+	--ion-color-warning-contrast-rgb: 0,0,0;
+	--ion-color-warning-shade: #e09808;
+	--ion-color-warning-tint: #ffb522;
 
   /** danger **/
   --ion-color-danger: #eb445a;
@@ -101,6 +109,15 @@
 	--ion-color-tint: var(--ion-color-muteblue-tint);
 }
 
+.ion-color-yellow {
+	--ion-color-base: var(--ion-color-yellow);
+	--ion-color-base-rgb: var(--ion-color-yellow-rgb);
+	--ion-color-contrast: var(--ion-color-yellow-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-yellow-contrast-rgb);
+	--ion-color-shade: var(--ion-color-yellow-shade);
+	--ion-color-tint: var(--ion-color-yellow-tint);
+}
+
 .ion-color-firebrick {
 	--ion-color-base: var(--ion-color-firebrick);
 	--ion-color-base-rgb: var(--ion-color-firebrick-rgb);
@@ -130,6 +147,13 @@
   	--ion-color-firebrick-contrast-rgb: 255,255,255;
   	--ion-color-firebrick-shade: #a5091d;
   	--ion-color-firebrick-tint: #c22337;
+
+    --ion-color-yellow: #ffff00;
+	  --ion-color-yellow-rgb: 255,255,0;
+	  --ion-color-yellow-contrast: #000000;
+	  --ion-color-yellow-contrast-rgb: 0,0,0;
+	  --ion-color-yellow-shade: #e0e000;
+	  --ion-color-yellow-tint: #ffff1a;
     
     --ion-color-primary: #3880ff;
     --ion-color-primary-rgb: 56, 128, 255;
@@ -159,12 +183,12 @@
     --ion-color-success-shade: #29c467;
     --ion-color-success-tint: #44e283;
 
-    --ion-color-warning: #ffd534;
-    --ion-color-warning-rgb: 255,213,52;
-    --ion-color-warning-contrast: #000000;
-    --ion-color-warning-contrast-rgb: 0,0,0;
-    --ion-color-warning-shade: #e0bb2e;
-    --ion-color-warning-tint: #ffd948;
+    --ion-color-warning: #ffad09;
+	  --ion-color-warning-rgb: 255,173,9;
+	  --ion-color-warning-contrast: #000000;
+	  --ion-color-warning-contrast-rgb: 0,0,0;
+  	--ion-color-warning-shade: #e09808;
+	  --ion-color-warning-tint: #ffb522;
 
     --ion-color-danger: #ff4961;
     --ion-color-danger-rgb: 255,73,97;
