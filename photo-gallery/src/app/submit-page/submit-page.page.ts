@@ -38,12 +38,9 @@ const lotRef = (db);
 export class SubmitPagePage implements OnInit {
   handlerMessage = '';
   roleMessage = '';
-  date = new Date().toDateString();
-  time = new Date().getHours();
   datetime = new Date().toString();
   lastEmittedValue: RangeValue; 
   myLot: string;
-
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private alertController: AlertController,private activatedRoute: ActivatedRoute, private router: Router){}
   
   cancel() {
@@ -52,11 +49,10 @@ export class SubmitPagePage implements OnInit {
 
   async writeData() { 
     try {
-      await addDoc(collection(lotRef, this.myLot), {
+      await addDoc(collection(lotRef, "Submissions"), {
         fill: this.lastEmittedValue,
         datetime: this.datetime,
-        date: this.date,
-        time: this.time
+        name: this.myLot
       });
       console.log("Document written with ID: ", lotRef);
     } catch (e) {
@@ -89,8 +85,6 @@ export class SubmitPagePage implements OnInit {
 
   ngOnInit() {
     this.navParams.data.myLot
-    console.log(this.myLot, this.date)
-
     }
 
 
