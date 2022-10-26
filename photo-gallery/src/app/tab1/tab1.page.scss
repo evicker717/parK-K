@@ -1,0 +1,26 @@
+ion-col {
+    background-color: #f9b310;
+    border: solid 1px #fff;
+    color: #fff;
+    text-align: center;
+    border-radius: 25px;
+    width: 200px;
+    height: 100px;   
+}
+  ion-grid {
+    --ion-grid-padding: 20px;
+  
+    --ion-grid-padding-xs: 20px;
+    --ion-grid-padding-sm: 20px;
+    --ion-grid-padding-md: 20px;
+    --ion-grid-padding-lg: 20px;
+    --ion-grid-padding-xl: 20px;
+  
+    --ion-grid-column-padding: 30px;
+  
+    --ion-grid-column-padding-xs: 30px;
+    --ion-grid-column-padding-sm: 30px;
+    --ion-grid-column-padding-md: 30px;
+    --ion-grid-column-padding-lg: 30px;
+    --ion-grid-column-padding-xl: 30px;
+  }
