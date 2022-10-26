@@ -24,6 +24,8 @@
         <ion-card-subtitle>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-subtitle>
       </ion-card-content>
       </ion-card>
+      <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Accuracy</ion-button>
+
       <ion-card>
       <ion-card-content>
       <ion-accordion-group>
@@ -48,6 +50,5 @@
       </ion-accordion-group>
     </ion-card-content>
   </ion-card>
-    <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Accuracy</ion-button>
   
 </ion-content>
