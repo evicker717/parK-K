@@ -35,19 +35,33 @@ export class Tab1Page implements OnInit {
 
   handleChange(e) {
     this.selectedTags = e.target.value;
+    console.log(this.selectedTags)
+    this.getData()
+    
   }
   async getData(){
     const q = query(collection(db, "Lots"));
     var anArray = []
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      anArray.push(doc.data())
-      console.log(doc.id, " => ", doc.data());
+      this.tags = doc.data().tags
+      if(this.selectedTags.length > 0){
+        const intersection = this.tags.filter(element => this.selectedTags.includes(element));
+        console.log(intersection)
+        if(intersection.length > 0)
+        {
+
+          anArray.push(doc.data())
+        }
+      }
+      else{
+        anArray.push(doc.data())
+      }
     });
     this.lotData = anArray
     console.log(this.lotData)
     }
-      
+
 
 
   ngOnInit() 
