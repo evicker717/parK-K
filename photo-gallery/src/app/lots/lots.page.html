@@ -24,7 +24,7 @@
         <ion-card-subtitle>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-subtitle>
       </ion-card-content>
       </ion-card>
-      <ion-button fill="clear" expand="block" (click)="openModal()"> Improve Accuracy</ion-button>
+      <ion-button fill="clear" expand="block" (click)="openModal()" color="warning"> Submit Data</ion-button>
 
       <ion-card>
       <ion-card-content>
@@ -33,9 +33,9 @@
           <ion-item slot="header" color="light">
             <ion-label>View Detailed Report</ion-label>
           </ion-item>
-              <ul class ="ion-padding" slot="content" *ngFor="let entry of todays_entries">
+              <ul slot="content" *ngFor="let entry of todays_entries">
               <li>
-                {{entry.fill}}%, Submitted at {{entry.datetime | date: 'hh:mm a' }}
+                {{entry.fill}}%, Submitted at {{entry.datetime | date: 'hh:mm a'}}
               </li>
             </ul>
         </ion-accordion>

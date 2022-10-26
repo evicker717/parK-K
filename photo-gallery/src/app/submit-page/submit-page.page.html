@@ -11,14 +11,14 @@
   <ion-grid>
     <ion-row>
       <ion-label class="ion-text-wrap">      
-        Help us provide the most accurate data possible, how full is the lot currently?
+        Give an estimate of how full the lot is (0 empty - 100 full)
       </ion-label>
       </ion-row>
       <ion-row>
-        <ion-range (ionChange)="onIonChange($event)" [pin]="true" color='muteblue'></ion-range>
+        <ion-range (ionChange)="onIonChange($event)" [pin]="true" color='warning'></ion-range>
       </ion-row>
       <ion-row>
-        <ion-button color='muteblue' type="submit" (click)="confirm()">Submit</ion-button>
+        <ion-button color='warning' type="submit" (click)="confirm()">Submit</ion-button>
         <p>{{ handlerMessage }}</p>
       </ion-row>
   </ion-grid>
