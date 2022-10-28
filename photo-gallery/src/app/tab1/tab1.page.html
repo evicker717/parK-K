@@ -31,9 +31,9 @@
     <ion-row>
       <ion-col size="6" size-md="4" size-lg="2" *ngFor="let lot of lotData" button [routerLink]="[lot.name]">
         <div>
-            <ion-label>
+            <ion-text>
               {{lot.name}}
-            </ion-label>
+            </ion-text>
             <ion-note>
               {{lot.tags}}
             </ion-note>
