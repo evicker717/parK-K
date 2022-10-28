@@ -39,12 +39,14 @@ export class Tab1Page implements OnInit {
     this.getData()
     
   }
+
   async getData(){
     const q = query(collection(db, "Lots"));
     var anArray = []
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       this.tags = doc.data().tags
+      this.avg = doc.data().avg
       if(this.selectedTags.length > 0){
         const intersection = this.tags.filter(element => this.selectedTags.includes(element));
         console.log(intersection)
@@ -58,6 +60,7 @@ export class Tab1Page implements OnInit {
         anArray.push(doc.data())
       }
     });
+
     this.lotData = anArray
     console.log(this.lotData)
     }
@@ -67,6 +70,7 @@ export class Tab1Page implements OnInit {
   ngOnInit() 
   {
     this.getData()
+
   }
   
   }

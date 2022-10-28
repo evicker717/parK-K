@@ -7,7 +7,7 @@ admin.initializeApp();
 exports.removeExpiredDocuments = functions.pubsub.schedule("every 1 hours").onRun(async (context) => {
   const db = admin.firestore();
   const now = new Date().getTime();
-  const ts = now - 86400000; // 24 hours in milliseconds = 86400000
+  const ts = now - 43200000; // 12 hours in milliseconds = 43200000
 
   const snap = await db.collection("Submissions").where("timestamp", "<", ts).get();
   console.log(snap)

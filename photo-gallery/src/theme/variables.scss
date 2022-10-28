@@ -1,8 +1,40 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
-
+@font-face {   
+  font-family: 'GothamMedium';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamMedium.ttf');
+}
+@font-face {   
+  font-family: 'GothamBold';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamBold.ttf');
+}
+@font-face {   
+  font-family: 'GothamBoldItalic';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamBoldItalic.ttf');
+}
+@font-face {   
+  font-family: 'GothamBook';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamBook.ttf');
+}
+@font-face {   
+  font-family: 'GothamBookItalic';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamBoldItalic.ttf');
+}
+@font-face {   
+  font-family: 'GothamLight';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamLight.ttf');
+}
+@font-face {   
+  font-family: 'GothamLightItalic';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamLightItalic.ttf');
+}
+@font-face {   
+  font-family: 'GothamMediumItalic';  //This is what we are going to call  
+  src: url('../assets/fonts/Gotham-Font/GothamMediumItalic.ttf');
+}
 /** Ionic CSS Variables **/
 :root {
+  /* Set the font family of the entire app */
   /** muteblue **/
   --ion-color-muteblue: #4B88A2;
 	--ion-color-muteblue-rgb: 75,136,162;
@@ -11,6 +43,13 @@
 	--ion-color-muteblue-shade: #42788f;
 	--ion-color-muteblue-tint: #5d94ab;
 
+  /**Kalamazoo College Orange**/
+  --ion-color-kzoo:#E57200;
+	--ion-color-kzoo-rgb: 229,114,0;
+	--ion-color-kzoo-contrast: #ffffff;
+	--ion-color-kzoo-contrast-rgb: 255,255,255;
+	--ion-color-kzoo-shade: #ce6700;
+	--ion-color-kzoo-tint: #ed9c4d;
   /** firebrick **/
   --ion-color-firebrick: #BB0A21;
 	--ion-color-firebrick-rgb: 187,10,33;
@@ -26,30 +65,6 @@
 	--ion-color-yellow-contrast-rgb: 0,0,0;
 	--ion-color-yellow-shade: #e0e000;
 	--ion-color-yellow-tint: #ffff1a;
-
-  /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
-
-  /** secondary **/
-  --ion-color-secondary: #3dc2ff;
-  --ion-color-secondary-rgb: 61, 194, 255;
-  --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
-
-  /** tertiary **/
-  --ion-color-tertiary: #5260ff;
-  --ion-color-tertiary-rgb: 82, 96, 255;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #4854e0;
-  --ion-color-tertiary-tint: #6370ff;
 
   /** success **/
   --ion-color-success: #2dd36f;
@@ -108,7 +123,17 @@
 	--ion-color-shade: var(--ion-color-muteblue-shade);
 	--ion-color-tint: var(--ion-color-muteblue-tint);
 }
-
+.ion-color-kzoo{
+  --ion-color-base: var(--ion-color-kzoo);
+	--ion-color-base-rgb: var(--ion-color-kzoo-rgb);
+	--ion-color-contrast: var(--ion-color-kzoo-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-kzoo-contrast-rgb);
+	--ion-color-shade: var(--ion-color-kzoo-shade);
+	--ion-color-tint: var(--ion-color-kzoo-tint);
+}
+.ion-gotham-family{
+  --ion-font-family: var(var(--ion-font-family))
+}
 .ion-color-yellow {
 	--ion-color-base: var(--ion-color-yellow);
 	--ion-color-base-rgb: var(--ion-color-yellow-rgb);

@@ -1,3 +1,6 @@
+
+
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
@@ -7,9 +10,9 @@
       <ion-item>
         <ion-select
         [compareWith]="compareWith"
-        placeholder="Sort by Type"
-        (ionChange)="handleChange($event)"
-        [multiple]="true">
+        placeholder="Sort by Tags"
+        (ionChange)="handleChange($event)">
+
           <ion-select-option value="Visitor">Visitor</ion-select-option>
           <ion-select-option value="Employee">Employee</ion-select-option>
           <ion-select-option value="Overnight">Overnight</ion-select-option>
@@ -29,15 +32,18 @@
   </ion-header>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" size-md="4" size-lg="2" *ngFor="let lot of lotData" button [routerLink]="[lot.name]">
-        <div>
+      <ion-col size="6" *ngFor="let lot of lotData" button [routerLink]="[lot.name]">
+        <ion-button color="kzoo" size="large" expand="block">
             <ion-text>
               {{lot.name}}
             </ion-text>
-            <ion-note>
-              {{lot.tags}}
-            </ion-note>
-        </div>
+          </ion-button>
+            <ion-content>
+              <ion-progress-bar [color]="color" [value] = 'lot.avg/100'></ion-progress-bar>
+              <br>
+              {{lot.tags[0]}}, {{lot.tags[1]}}, {{lot.tags[2]}}
+            </ion-content>
+  
         </ion-col>
       </ion-row>
     </ion-grid>

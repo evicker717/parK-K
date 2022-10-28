@@ -1,26 +1,43 @@
 ion-col {
-    background-color: #f9b310;
-    border: solid 1px #fff;
-    color: #fff;
     text-align: center;
-    border-radius: 25px;
-    width: 200px;
-    height: 100px;   
+    width: 250px;
+    height: 110px;   
+    
 }
-  ion-grid {
-    --ion-grid-padding: 20px;
+
+ion-text{ 
+  font-family:GothamMedium !important;
+}
+ion-title{
+  font-family: GothamBold !important;
+}
+ion-select{
+  font-family: GothamLightItalic !important;
+
+}
+ion-select-option{
+  font-family: GothamLightItalic !important;
   
-    --ion-grid-padding-xs: 20px;
-    --ion-grid-padding-sm: 20px;
-    --ion-grid-padding-md: 20px;
-    --ion-grid-padding-lg: 20px;
-    --ion-grid-padding-xl: 20px;
+}
+ion-content{
+  font-family: GothamLightItalic !important;
+  font-size: small;
+}
+
+ion-button {
+  --background-color:#E57200;
+  --background-hover: #ce6700;
+  --background-activated: #ed9c4d;
+  --background-focused: #ed9c4d;
   
-    --ion-grid-column-padding: 30px;
-  
-    --ion-grid-column-padding-xs: 30px;
-    --ion-grid-column-padding-sm: 30px;
-    --ion-grid-column-padding-md: 30px;
-    --ion-grid-column-padding-lg: 30px;
-    --ion-grid-column-padding-xl: 30px;
-  }
+  --border-radius: 0;
+  --border-color: #000;
+  --border-style: solid;
+  --border-width: 3px;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
