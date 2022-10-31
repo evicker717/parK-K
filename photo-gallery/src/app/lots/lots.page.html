@@ -22,6 +22,10 @@
         <ion-card-content>
           <ion-row class="ion-justify-content-start">
             <ion-col>
+        <ion-row>
+          <ion-card-content>Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-card-content>
+        </ion-row>
+       
         <ion-card-content>Total Spots: {{cap}}</ion-card-content>
         </ion-col>
           </ion-row>
