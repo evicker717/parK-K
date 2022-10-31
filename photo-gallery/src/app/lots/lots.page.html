@@ -18,32 +18,12 @@
         <ion-card-content>
       <ion-progress-bar [color] = 'color' [value] = 'p_bar_value'></ion-progress-bar>
         </ion-card-content>
-        <ion-grid [fixed]="true">
-        <ion-card-content>
-          <ion-row class="ion-justify-content-start">
-            <ion-col>
-        <ion-row>
+       
           <ion-card-content>Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-card-content>
-        </ion-row>
        
         <ion-card-content>Total Spots: {{cap}}</ion-card-content>
-        </ion-col>
-          </ion-row>
-            <ion-row class="ion-justify-content-start">
-              <ion-col>
-                <ion-card-subtitle>tags:</ion-card-subtitle>
-              </ion-col>
-              <ion-col *ngFor="let tag of tags">
-                <p>{{tag}}</p>
-               </ion-col>
-            </ion-row>
-            <ion-row class="ion-justify-content-start">
-              <ion-col>
+
         <ion-card-content>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-content>
-      </ion-col>
-      </ion-row>
-      </ion-card-content>
-    </ion-grid>
       </ion-card>
       <ion-button fill="clear" expand="block" (click)="openModal()" color="kzoo"> Submit Data</ion-button>
 
