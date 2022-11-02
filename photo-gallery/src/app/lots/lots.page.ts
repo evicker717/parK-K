@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { addDoc, getFirestore } from "firebase/firestore";
-import { collection, query, where, getDoc, doc, getDocs } from "firebase/firestore";
+import { collection, query, where, getDoc, doc, getDocs , orderBy} from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
 import { DatePipe } from '@angular/common';
@@ -37,7 +37,7 @@ export class LotsPage implements OnInit{
   lotData: Object
   cap: number
   tags: Array<string>
-  lastUpdated: string
+  lastTimestamp: string
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
   
   async getData(){
@@ -48,7 +48,7 @@ export class LotsPage implements OnInit{
       this.avg = docSnap.data().avg
       this.cap = docSnap.data().cap
       this.tags = docSnap.data().tags
-      this.lastUpdated = docSnap.data().lastUpdated
+      this.lastTimestamp = docSnap.data().lastTimestamp
       this.setPercentBar()
     } else {
       // doc.data() will be undefined in this case
@@ -65,6 +65,7 @@ export class LotsPage implements OnInit{
       console.log(doc.id, " => ", doc.data());
       anArray.push(doc.data())
 });
+anArray.sort((a, b) => b.timestamp - a.timestamp);
 this.todays_entries = anArray 
   }
 

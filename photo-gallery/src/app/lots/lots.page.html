@@ -21,7 +21,7 @@
         </ion-card-content>
           <ion-card-content>Estimated Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-card-content>
         <ion-card-content>Total Spots: {{cap}}</ion-card-content>
-        <ion-card-content>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-content>
+        <ion-card-content>Last Updated at: {{lastTimestamp | date: 'hh:mm a'}}</ion-card-content>
       </ion-list>
       </ion-card>
       <ion-button fill="clear" expand="block" (click)="openModal()" color="kzoo">Submit Data</ion-button>
@@ -34,7 +34,7 @@
           </ion-item>
               <ul slot="content" *ngFor="let entry of todays_entries">
               <li>
-                {{entry.fill}}%, Submitted at {{entry.datetime | date: 'hh:mm a'}}
+                {{entry.fill}}%, Submitted at {{entry.timestamp | date: 'hh:mm a'}}
               </li>
             </ul>
         </ion-accordion>
