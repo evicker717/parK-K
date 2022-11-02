@@ -12,21 +12,19 @@
 <ion-content>
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Capacity: {{avg | number: '1.0-0'}}%</ion-card-title>
+          <ion-card-title>Capacity: {{avg | number: '1.0-0'}}% full</ion-card-title>
           <ion-card-subtitle>{{myLot}}</ion-card-subtitle>
         </ion-card-header>
+        <ion-list>
         <ion-card-content>
       <ion-progress-bar [color] = 'color' [value] = 'p_bar_value'></ion-progress-bar>
         </ion-card-content>
-       
-          <ion-card-content>Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-card-content>
-       
+          <ion-card-content>Estimated Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-card-content>
         <ion-card-content>Total Spots: {{cap}}</ion-card-content>
-
         <ion-card-content>Last Updated at: {{lastUpdated | date: 'hh:mm a'}}</ion-card-content>
+      </ion-list>
       </ion-card>
-      <ion-button fill="clear" expand="block" (click)="openModal()" color="kzoo"> Submit Data</ion-button>
-
+      <ion-button fill="clear" expand="block" (click)="openModal()" color="kzoo">Submit Data</ion-button>
       <ion-card>
       <ion-card-content>
       <ion-accordion-group>
@@ -51,5 +49,4 @@
       </ion-accordion-group>
     </ion-card-content>
   </ion-card>
-  
 </ion-content>

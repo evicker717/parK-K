@@ -64,7 +64,8 @@ export class SubmitPagePage implements OnInit {
   const lotRef = doc(db, "Lots", this.myLot)
   await updateDoc(lotRef, {
     avg: this.avg,
-    lastUpdated: this.datetime
+    lastUpdated: this.datetime,
+    lastTimestamp: this.timeStamp
   });
   }
   async writeData() { 
