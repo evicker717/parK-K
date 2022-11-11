@@ -3,9 +3,6 @@
 
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      All Parking
-    </ion-title>
     <ion-buttons slot="end">
       <ion-item>
         <ion-select
@@ -27,11 +24,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Parking</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let lot of lotData" button [routerLink]="[lot.name]">
@@ -45,7 +37,6 @@
               <br>
               {{lot.tags[0]}} {{lot.tags[1]}} {{lot.tags[2]}} {{lot.tags[3]}}
             </ion-content>
-  
         </ion-col>
       </ion-row>
     </ion-grid>
