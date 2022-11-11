@@ -28,7 +28,7 @@ exports.resetAvg = functions.pubsub.schedule("every 1 hours").onRun(async (conte
   snap.forEach((snap) =>{
     promises.push(snap.ref.update({
       avg: null,
-      lastTimestamp: now
+      lastTimestamp: null
     }));
   } )
   return Promise.all(promises);

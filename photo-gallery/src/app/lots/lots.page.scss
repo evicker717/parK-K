@@ -1,3 +1,4 @@
+
 ion-grid {
     --ion-grid-width: 50%;
   
@@ -8,7 +9,20 @@ ion-grid {
     --ion-grid-width-xl: 570px;
   }
 
+  ion-title{
+    font-family:GothamBold !important;
+  }
+  ion-label{
+    font-family: GothamLightItalic !important;
   
+  }
+  ion-list{
+    --padding: 0%
+  
+  }
+  ion-card{
+    --border-color: #E57200;
+  }
   ion-col {
     background-color: #135d54;
     border: solid 1px #fff;

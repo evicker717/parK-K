@@ -1,12 +1,13 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
+import { IonModal } from '@ionic/angular';
 import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, query, where, getDoc, doc, getDocs , orderBy} from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
 import { SubmitPagePage } from '../submit-page/submit-page.page';
 import { DatePipe } from '@angular/common';
-
+import { OverlayEventDetail } from '@ionic/core/components';
 //Declare firestore config constants
 
 const firebaseConfig = {
@@ -25,9 +26,20 @@ const db = getFirestore(app);
 @Component({
   selector: 'app-lots',
   templateUrl: 'lots.page.html',
+  styleUrls: ['lots.page.scss']
+
 })
 //declare class that runs ngOnInit on activation
 export class LotsPage implements OnInit{
+    @ViewChild(IonModal) modal: IonModal;
+    message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name: string;
+
+
+  ok() {
+    this.modal.dismiss(null, 'confirm');
+  }
+
   //declares global variables 
   myLot: string;
   avg: number;
@@ -39,22 +51,28 @@ export class LotsPage implements OnInit{
   tags: Array<string>
   lastTimestamp: string
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
-  
+  selectedValues = [];
+
+  handleChange(e) {
+    this.selectedValues = e.target.value;
+    console.log(this.selectedValues)
+    this.getData()
+    
+  }
   async getData(){
     const docRef = doc(db, "Lots", this.myLot);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       this.avg = docSnap.data().avg
       this.cap = docSnap.data().cap
       this.tags = docSnap.data().tags
       this.lastTimestamp = docSnap.data().lastTimestamp
       this.setPercentBar()
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-      this.noDataHandler()
-    }
+      if(this.avg == null){
+        console.log("No up to date submissions!");
+        this.noDataHandler()
+      }
+    
   }
   async getDetailedReport(){
     const q = query(collection(db, "Submissions"), where("name", "==", this.myLot));
@@ -69,7 +87,7 @@ anArray.sort((a, b) => b.timestamp - a.timestamp);
 this.todays_entries = anArray 
   }
 
-  async openModal() {//opens up the fillable submition form 
+  async openForm() {//opens up the fillable submition form 
     const modal = await this.modalCtrl.create({
       component: SubmitPagePage,
       componentProps: {
@@ -78,16 +96,16 @@ this.todays_entries = anArray
     });
     modal.present();
   }
+  async openInfo() {
+
+  }
   setPercentBar() {
       this.p_bar_value = this.avg/100;
-      if(this.p_bar_value > .75) {
-        this.color = "firebrick";
+      if(this.p_bar_value > .80) {
+        this.color = "danger";
       }
-      else if(this.p_bar_value > .5) {
+      else if(this.p_bar_value > .50) {
         this.color = "warning";
-      }
-      else if(this.p_bar_value > .25) {
-        this.color = "yellow";
       }
       else {
         this.color = "success";
@@ -101,7 +119,7 @@ this.todays_entries = anArray
           text: "OK",
           role: 'confirm',
           handler: () => {
-            this.openModal()  
+            this.openForm()  
           },
         },
 

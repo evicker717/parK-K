@@ -11,7 +11,8 @@
         <ion-select
         [compareWith]="compareWith"
         placeholder="Sort by Tags"
-        (ionChange)="handleChange($event)">
+        (ionChange)="handleChange($event)"
+        [multiple]="true">
 
           <ion-select-option value="Visitor">Visitor</ion-select-option>
           <ion-select-option value="Employee">Employee</ion-select-option>
@@ -19,6 +20,7 @@
           <ion-select-option value="Student">Student</ion-select-option>
           <ion-select-option value="Street">Street Parking</ion-select-option>
           <ion-select-option value="Lot">Lot Parking</ion-select-option>
+          <ion-select-option value="Permit">Permit Only</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-buttons>
