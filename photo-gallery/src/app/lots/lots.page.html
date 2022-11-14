@@ -15,17 +15,55 @@
             <ion-toolbar>
               <ion-title>Info</ion-title>
               <ion-buttons slot="end">
-                <ion-button (click)="ok()" [strong]="true">Confirm</ion-button>
+                <ion-button (click)="cancel()" [strong]="true">Confirm</ion-button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
             <ion-item>
               <p>
-                Thanks for using the parK app! This app is a project by Evan Vicker, Will Shaw, and Nate Fuller, designed to keep track of avalible parking around campus. We collect data submitted by users and use an average to estimate the amount of parking spots remaining in a given region of campus. 
+                Thanks for using the parK app!
+                This app is a project by Evan Vicker, 
+                Will Shaw, and Nate Fuller, designed 
+                to keep track of avalible parking around campus.
+                We collect data submitted by users and
+                use an average to estimate the amount of 
+                parking spots remaining in a given region of campus. 
+                Given our method of determining spots remaining, we cannot
+                guarante that our data is 100% accurate
               </p>
             </ion-item>
           </ion-content>
+        </ng-template>
+      </ion-modal>
+      <ion-modal trigger="open-form">
+        <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-grid>
+                <ion-row>
+                  <ion-label class="ion-text-wrap">      
+                    Give an estimate of how many spots are taken:
+                  </ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-range [min]="0" [max]="cap" (ionChange)="onIonChange($event)" [pin]="true" color='kzoo'>
+                      <ion-label slot="start">0</ion-label>
+                      <ion-label slot="end" >{{cap}}</ion-label>
+                    </ion-range>
+                  </ion-row>
+                  <ion-row>
+                    <ion-button color='kzoo' type="submit" (click)="confirm()">Submit</ion-button>
+                    <p>{{ handlerMessage }}</p>
+                  </ion-row>
+              </ion-grid>
+            </ion-content>
         </ng-template>
       </ion-modal>
     </ion-button>
@@ -34,16 +72,14 @@
 <ion-content>
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Capacity: {{avg | number: '1.0-0'}}% full</ion-card-title>
+          <ion-card-title>{{cap - avg | number: '1.0-0'}} Spots Remaining</ion-card-title>
         </ion-card-header>
         <ion-card-content>
         <ion-list>
           <ion-item>
-          <ion-progress-bar [color] = 'color' [value] = 'p_bar_value'></ion-progress-bar>
+          <ion-progress-bar [color] = 'color' [value] = 'p_bar_value'>
+          </ion-progress-bar>
         </ion-item>
-          <ion-item>
-            <ion-label>Estimated Spots Remaining: {{cap * ( 1-(avg / 100)) | number: '1.0-0'}}</ion-label>
-          </ion-item>
           <ion-item>
             <ion-label>Total Spots: {{cap}}</ion-label>
           </ion-item>
@@ -53,7 +89,7 @@
       </ion-list>
     </ion-card-content>
       </ion-card>
-      <ion-button fill="clear" expand="block" (click)="openForm()" color="kzoo">Submit Data</ion-button>
+      <ion-button id="open-form" fill="clear" expand="block" color="kzoo">Submit Data</ion-button>
       <ion-card>
       <ion-card-content>
       <ion-accordion-group>
@@ -63,7 +99,7 @@
           </ion-item>
               <ul slot="content" *ngFor="let entry of todays_entries">
               <li>
-                {{entry.fill}}%, Submitted at {{entry.timestamp | date: 'hh:mm a'}}
+                {{entry.fill}} spots filled, Submitted at {{entry.timestamp | date: 'hh:mm a'}}
               </li>
             </ul>
         </ion-accordion>

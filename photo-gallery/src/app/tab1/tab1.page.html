@@ -3,6 +3,9 @@
 
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-title slot = "start">
+        
+    </ion-title>
     <ion-buttons slot="end">
       <ion-item>
         <ion-select
@@ -33,7 +36,7 @@
             </ion-text>
           </ion-button>
             <ion-content>
-              <ion-progress-bar [color]="color" [value] = 'lot.avg/100'></ion-progress-bar>
+              <ion-progress-bar [color]="color" [value] = 'lot.avg/lot.cap'></ion-progress-bar>
               <br>
               {{lot.tags[0]}} {{lot.tags[1]}} {{lot.tags[2]}} {{lot.tags[3]}}
             </ion-content>

@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { IonModal } from '@ionic/angular';
 import { addDoc, getFirestore } from "firebase/firestore";
-import { collection, query, where, getDoc, doc, getDocs , orderBy} from "firebase/firestore";
+import { collection, query, where, getDoc, doc, getDocs , orderBy, updateDoc} from "firebase/firestore";
 import { ModalController, AlertController } from '@ionic/angular';
-import { SubmitPagePage } from '../submit-page/submit-page.page';
 import { DatePipe } from '@angular/common';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { RangeCustomEvent } from '@ionic/angular';
+import { RangeValue } from '@ionic/core';
+
 //Declare firestore config constants
 
 const firebaseConfig = {
@@ -21,6 +23,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const lotRef = (db);
 
 //declare component parts
 @Component({
@@ -34,13 +37,6 @@ export class LotsPage implements OnInit{
     @ViewChild(IonModal) modal: IonModal;
     message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name: string;
-
-
-  ok() {
-    this.modal.dismiss(null, 'confirm');
-  }
-
-  //declares global variables 
   myLot: string;
   avg: number;
   p_bar_value: number;
@@ -50,14 +46,73 @@ export class LotsPage implements OnInit{
   cap: number
   tags: Array<string>
   lastTimestamp: string
+  timeStamp = new Date().getTime();
+  lastEmittedValue: RangeValue; 
   constructor(private alertController: AlertController, private modalCtrl: ModalController,private activatedRoute: ActivatedRoute) {}
   selectedValues = [];
+  roleMessage = '';
+
 
   handleChange(e) {
     this.selectedValues = e.target.value;
     console.log(this.selectedValues)
     this.getData()
     
+  }
+  async getAvg(){
+    const q = query(collection(db, "Submissions"), where("name", "==", this.myLot));
+    var total = 0
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+    var temp = doc.data().fill
+    console.log(temp)
+    total = temp + total
+    console.log(total)
+});
+  this.avg = total/querySnapshot.size
+  console.log(this.avg) 
+  const lotRef = doc(db, "Lots", this.myLot)
+  await updateDoc(lotRef, {
+    avg: this.avg,
+    lastTimestamp: this.timeStamp
+  });
+  }
+  async writeData() { 
+    try {
+      await addDoc(collection(lotRef, "Submissions"), {
+        fill: this.lastEmittedValue,
+        name: this.myLot,
+        timestamp: this.timeStamp
+      });
+      console.log("Document written with ID: ", this.myLot);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+  async confirm() {
+    const alert = await this.alertController.create({
+      header: 'Thank you for helping us provide accurate data!',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            this.writeData()  
+            this.getAvg()
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`
+    return this.modalCtrl.dismiss(null, 'confirm');
+  }
+  onIonChange(ev: Event) {
+    this.lastEmittedValue = (ev as RangeCustomEvent).detail.value;
   }
   async getData(){
     const docRef = doc(db, "Lots", this.myLot);
@@ -86,21 +141,13 @@ export class LotsPage implements OnInit{
 anArray.sort((a, b) => b.timestamp - a.timestamp);
 this.todays_entries = anArray 
   }
-
-  async openForm() {//opens up the fillable submition form 
-    const modal = await this.modalCtrl.create({
-      component: SubmitPagePage,
-      componentProps: {
-        "myLot": this.myLot,
-      }
-    });
-    modal.present();
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
   }
-  async openInfo() {
 
-  }
+
   setPercentBar() {
-      this.p_bar_value = this.avg/100;
+      this.p_bar_value = this.avg/this.cap;
       if(this.p_bar_value > .80) {
         this.color = "danger";
       }
@@ -119,7 +166,7 @@ this.todays_entries = anArray
           text: "OK",
           role: 'confirm',
           handler: () => {
-            this.openForm()  
+            //this.openForm()  
           },
         },
 
