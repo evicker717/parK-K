@@ -166,7 +166,6 @@ this.todays_entries = anArray
           text: "OK",
           role: 'confirm',
           handler: () => {
-            //this.openForm()  
           },
         },
 
